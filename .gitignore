@@ -1,0 +1,10 @@
+.gitignore
+.*
+cmake-build-debug/*
+a.out
+CMakeLists.txt
+text.txt
+main.c
+42TESTERS-GNL/*
+42TESTERS-GNL
+.gitignore
