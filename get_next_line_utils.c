@@ -54,9 +54,9 @@ char    *ft_strchr(const char *s, int c)
 
 char    *ft_strdup(const char *s1)
 {
-	size_t    len;
-	size_t i;
-	char    *str;
+	size_t		len;
+	size_t		i;
+	char		*str;
 
 	i = 0;
 	len = ft_strlen(s1);
@@ -68,11 +68,39 @@ char    *ft_strdup(const char *s1)
 		str[i] = s1[i];
 		i++;
 	}
-	str[i] = '\n';
-	i++;
 	str[i] = '\0';
 	return (str);
 }
+
+char	*ft_clean(char *remain)
+{
+	size_t i;
+	size_t j;
+	char *tmp;
+
+	i = 0;
+	tmp = "";
+	while (remain[i] != '\n' && remain[i] != '\0')
+		i++;
+	if (remain[i] == '\0')
+	{
+		//free(remain);
+		return (NULL);
+	}
+	if (remain[i] == '\n')
+	{
+		j = 0;
+		i++;
+		tmp = malloc(sizeof (char) * (ft_strlen(remain) - i));
+		while (remain[i] != '\0')
+			tmp[j++] = remain[i++];
+		free(remain);
+	}
+	return (tmp);
+}
+
+
+
 
 
 /*char	*ft_copy(void *dst, void *src)
