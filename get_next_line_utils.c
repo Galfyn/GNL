@@ -20,6 +20,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s2)
 		return (NULL);
+	if ((char *)s1 == NULL)
+		s1 = "";
 	i = 0;
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (str == NULL)
@@ -60,22 +62,39 @@ char    *ft_strdup(const char *s1)
 
 	i = 0;
 	len = ft_strlen(s1);
-	str = (char *)malloc(sizeof (char) * (len + 1));
+	str = (char *)malloc(sizeof (char) * (len));
 	if (str == NULL)
 		return (NULL);
-	while (s1[i] != '\n')
+	while (s1[i] != '\n' && s1[i] != '\0')
 	{
 		str[i] = s1[i];
 		i++;
 	}
-	str[i] = '\0';
+	//str[i] = '\0';
 	return (str);
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	int				i;
+	unsigned char	*dest;
+
+	dest = (unsigned char *)b;
+	i = 0;
+	while (len != 0)
+	{
+		dest[i] = c;
+		len--;
+		i++;
+	}
+	return (b);
 }
 
 char	*ft_clean(char *remain)
 {
 	size_t i;
 	size_t j;
+	size_t len;
 	char *tmp;
 
 	i = 0;
@@ -84,42 +103,21 @@ char	*ft_clean(char *remain)
 		i++;
 	if (remain[i] == '\0')
 	{
-		//free(remain);
+		free(remain);
 		return (NULL);
 	}
 	if (remain[i] == '\n')
 	{
 		j = 0;
 		i++;
-		tmp = malloc(sizeof (char) * (ft_strlen(remain) - i));
+		len = (ft_strlen(remain) - i);
+		tmp = malloc(sizeof (char) * len + 1);
+		if (!tmp)
+			return (NULL);
 		while (remain[i] != '\0')
 			tmp[j++] = remain[i++];
-		free(remain);
+		ft_memset(remain, 0, ft_strlen(remain));
+//		free(remain);
 	}
 	return (tmp);
 }
-
-
-
-
-
-/*char	*ft_copy(void *dst, void *src)
-{
-	size_t i;
-	char *temp;
-	char *s;
-
-	i = 0;
-	s = (char *)src;
-	temp = (char *)dst;
-	while (s[i] != '\n' || s[i] != '\0')
-		i++;
-	temp = malloc(sizeof (char) * i + 1);
-	if (temp == NULL)
-		return (NULL);
-	temp[i] = '\0';
-	while (i--)
-		temp[i] = s[i];
-	return (temp);
-}
-*/
